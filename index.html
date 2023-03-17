@@ -103,7 +103,7 @@
               </span> -->
               <!-- Code Link. -->
               <span class="link-block">
-                <a href=""
+                <a href="#code-coming-soon"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -144,7 +144,7 @@
         <div class="content has-text-centered">
           <p>
             We propose a method for editing NeRF scenes with text-instructions. Given a NeRF of a scene and the collection 
-            of images used to reconstruct it, our method uses an image-conditioned diffusion model (InstructPix2Pix) to 
+            of images used to reconstruct it, our method uses an image-conditioned diffusion model (<a href="https://www.timothybrooks.com/instruct-pix2pix">InstructPix2Pix</a>) to 
             iteratively edit the input images while optimizing the underlying scene, resulting in an optimized 3D scene that 
             respects the edit instruction. We demonstrate that our proposed method is able to edit large-scale, real-world 
             scenes, and is able to accomplish more realistic, targeted edits than prior work. 
@@ -241,11 +241,12 @@
         <h2 class="title is-3">How it works</h2>
         <div class="content has-text-centered">
           <p>
-            We iteratively edit each frame of the dataset and place the edited from into the dataset.
+            Our method gradually updates a reconstructed NeRF scene by iteratively updating the dataset images while training the 
+            NeRF: (1) an image is rendered from the scene at a training viewpoint, (2) it is edited by InstructPix2Pix given a 
+            global text instruction, (3) the training dataset image is replaced with the edited image, and (4) the NeRF continues 
+            training as usual.
           </p>
-
           <img src="static/images/pipeline.png" style='width:100%;'>
-
         </div>
       </div>
     </div>
@@ -261,10 +262,11 @@
       <!-- Visual Effects. -->
       <div class="column">
         <div class="content">
-          <h2 class="title is-3">Congealing Edits in 3D</h2>
+          <h2 class="title is-3">3D Consistency</h2>
           <p>
-            We compare to editing each frame of the render independenly. We show how crucial it is to 
-            congeal the iterative edits into a 3D representation to enforce consistency.
+            We compare our edited NeRF rendering to running InstructPix2Pix on each rendered frame independently.
+            While our edited NeRF is quite consistent, editing each 
+            frame independently results in an inconsistent render with varying hair and shirt color.
           </p>
           <video id="per-frame" autoplay controls muted loop playsinline height="100%">
             <source src="./static/videos/per-frame-placeholder.mp4"
@@ -280,8 +282,9 @@
         <div class="columns is-centered">
           <div class="column content">
             <p>
-              Initially, the edits on each frame are inconsistent with one another, but as training progresses,
-              the edits converge towards a consistent 3D representation in each 2D image.
+              At the start of training, the edited images perform the requested edit, but are often inconsistent. 
+              After iteratively training the NeRF and updating the training dataset, the images gradually become more 
+              3D consistent.
             </p>
             <video id="matting-video" controls playsinline height="100%">
               <source src="./static/videos/matting.mp4"
@@ -310,7 +313,11 @@
         <!-- Interpolating. -->
         <div class="content has-text-justified">
           <p>
-            We compare against a few baseline methods.
+            We compare against the following baselines: 
+            (1) using our dataset update method but using <a href="https://github.com/CompVis/stable-diffusion">Stable Diffusion</a> instead of InstructPix2Pix
+            (2) using an SDS-based loss (as introduced in <a href="https://dreamfusion3d.github.io/">DreamFusion</a>) driven by
+            InstructPix2Pix
+            (3) editing each training frame with InstructPix2Pix and then training a NeRF traditionally (One-time Dataset Update)
           </p>
         </div>
 
@@ -361,26 +368,6 @@
 
       </div>
     </div>
-    <!--/ Animation. -->
-
-
-    <!-- Concurrent Work. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Related Links</h2>
-
-        <div class="content has-text-justified">
-          <p>
-            Our work is a direct extension of <a href="https://www.timothybrooks.com/instruct-pix2pix">InstructPix2Pix</a>.
-          </p>
-          <p>
-            <a href="https://cassiepython.github.io/nerfart/">NeRF-Art</a> is a concurrent related work which performs stylization using a combination of CLIP-based losses.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Concurrent Work. -->
-
   </div>
 
 </div>
@@ -388,6 +375,40 @@
 </section>
 
 <section class="section">
+
+<div class="container is-max-desktop">
+  <!-- Concurrent Work. -->
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-full-width">
+      <h2 class="title is-3">Related Links</h2>
+
+      <div class="content has-text-centered">
+        <p>
+          Our work is a direct extension of <a href="https://www.timothybrooks.com/instruct-pix2pix">InstructPix2Pix</a>.
+        </p>
+        <p>
+          <a href="https://cassiepython.github.io/nerfart/">NeRF-Art</a> is a concurrent related work which performs stylization using a combination of CLIP-based losses.
+        </p>
+      </div>
+    </div>
+  </div>
+  <!--/ Concurrent Work. -->
+
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-full-width">
+      <h2 class="title is-3">Acknowledgements</h2>
+
+      <div class="content has-text-centered">
+        <p>
+          We thank Ethan Weber, Frederik Warburg, 
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="code-coming-soon" class="section">
   <div class="container is-max-desktop">
     <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
