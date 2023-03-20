@@ -1,473 +1,271 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
-  <meta name="description"
-        content="Instruct-NeRF2NeRF enables editing of a NeRF scene with a simple text instruction.">
-  <meta name="keywords" content="NeRF, Diffusion, InstructPix2Pix">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="Instruct-NeRF2NeRF enables editing of a NeRF scene with a simple text instruction."
+    name="description" />
+  <meta content="Instruct-NeRF2NeRF: Editing 3D Scenes with Instructions" property="og:title" />
+  <meta content="Instruct-NeRF2NeRF enables editing of a NeRF scene with a simple text instruction."
+    property="og:description" />
+  <meta content="TODO" property="og:image" />
+  <meta content="Instruct-NeRF2NeRF: Editing 3D Scenes with Instructions" property="twitter:title" />
+  <meta content="Instruct-NeRF2NeRF enables editing of a NeRF scene with a simple text instruction."
+    property="twitter:description" />
+  <meta content="TODO" property="twitter:image" />
+  <meta property="og:type" content="website" />
+  <meta content="summary_large_image" name="twitter:card" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+
+
   <title>Instruct-NeRF2NeRF: Editing 3D Scenes with Instructions</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-51T1ZNPMZT"></script>
+  <script
+    type="text/javascript">window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-51T1ZNPMZT', { 'anonymize_ip': false });</script>
 
-    function gtag() {
-      dataLayer.push(arguments);
-    }
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
-    gtag('js', new Date());
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script
+    type="text/javascript">WebFont.load({ google: { families: ["Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic", "Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic", "Ubuntu:300,300italic,400,400italic,500,500italic,700,700italic", "Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic", "Changa One:400,400italic", "Varela Round:400", "Bungee Shade:regular", "Roboto:300,regular,500", "Bungee Outline:regular"] } });</script>
+  <!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif]-->
 
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script src="script.js" type="text/javascript"></script>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+  <link href="style.css" rel="stylesheet" type="text/css" />
 
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" type="image/png" href="./static/images/favicon.png">
+  <link href="data/favicon.png" rel="shortcut icon" type="image/x-icon" />
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
 <body>
 
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Instruct-NeRF2NeRF</h1>
-          <h2 class="title is-2 publication-title">Editing 3D Scenes with Instructions</h2>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="https://www.ayaanzhaque.me/">Ayaan Haque</a>,</span>
-            <span class="author-block">
-              <a href="https://www.matthewtancik.com/">Matt Tancik</a>,</span>
-            <span class="author-block">
-              <a href="https://people.eecs.berkeley.edu/~efros/">Alexei Efros</a>,
-            </span>
-            <span class="author-block">
-              <a href="https://holynski.org/">Aleksander Holynski</a>,
-            </span>
-            <span class="author-block">
-              <a href="https://people.eecs.berkeley.edu/~kanazawa/">Angjoo Kanazawa</a>
-            </span>
-          </div>
-
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">UC Berkeley</span>
-          </div>
-
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href=""
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href=""
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <!-- Video Link. -->
-              <!-- <span class="link-block">
-                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                  </span>
-                  <span>Video</span>
-                </a>
-              </span> -->
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="#code-coming-soon"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code (Coming Soon)</span>
-                  </a>
-              </span>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video id="teaser" autoplay controls muted loop playsinline height="100%">
-        <source src="./static/videos/teaser-placeholder.mp4"
-                type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        <!-- <span class="dnerf">Instruct-NeRF2NeRF</span> edits a NeRF scene with a simple text instruction.
-         -->
-         Instruct-NeRF2NeRF enables instruction-based editing of NeRFs via a 2D diffusion model.
-      </h2>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="columns is-centered has-text-centered">
-    <div class="container is-max-desktop">
-      <div class="content">
-        <h2 class="title is-1">Overview</h2>
-        <div class="content has-text-centered">
-          <p>
-            We propose a method for editing NeRF scenes with text-instructions. Given a NeRF of a scene and the collection 
-            of images used to reconstruct it, our method uses an image-conditioned diffusion model (<a href="https://www.timothybrooks.com/instruct-pix2pix">InstructPix2Pix</a>) to 
-            iteratively edit the input images while optimizing the underlying scene, resulting in an optimized 3D scene that 
-            respects the edit instruction. We demonstrate that our proposed method is able to edit large-scale, real-world 
-            scenes, and is able to accomplish more realistic, targeted edits than prior work. 
-          </p>
-        </div>
-        <video id="per-frame" autoplay controls muted loop playsinline height="100%">
-          <source src="./static/videos/per-frame-placeholder.mp4"
-                  type="video/mp4">
-        </video>
-
-        <video id="per-frame" autoplay controls muted loop playsinline height="100%">
-          <source src="./static/videos/per-frame-placeholder.mp4"
-                  type="video/mp4">
-        </video>
-
-        <video id="per-frame" autoplay controls muted loop playsinline height="100%">
-          <source src="./static/videos/per-frame-placeholder.mp4"
-                  type="video/mp4">
-        </video>
-
-        <video id="per-frame" autoplay controls muted loop playsinline height="100%">
-          <source src="./static/videos/per-frame-placeholder.mp4"
-                  type="video/mp4">
-        </video>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- <section class="hero is-light is-small">
-  <div class="hero-body">
+  <div class="section">
     <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/steve.mp4"
-                    type="video/mp4">
-          </video>
+      <div class="title-row">
+        <h1 class="title">Instruct-NeRF2NeRF</h1>
+        <h1 class="subheader">Editing 3D Scenes with Instructions</h1>
+      </div>
+      <div class="base-row author-row">
+        <div class="base-col author-col">
+          <a href="https://www.ayaanzhaque.me/" target="_blank" class="author-text">
+            Ayaan Haque
+          </a>
         </div>
-        <div class="item item-chair-tp">
-          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/chair-tp.mp4"
-                    type="video/mp4">
-          </video>
+        <div class="base-col author-col">
+          <a href="https://www.matthewtancik.com/" target="_blank" class="author-text">
+            Matthew Tancik
+          </a>
         </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/shiba.mp4"
-                    type="video/mp4">
-          </video>
+        <div class="base-col author-col">
+          <a href="https://people.eecs.berkeley.edu/~efros/" target="_blank" class="author-text">
+            Alexei Efros
+          </a>
         </div>
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/fullbody.mp4"
-                    type="video/mp4">
-          </video>
+        <div class="base-col author-col">
+          <a href="https://holynski.org/" target="_blank" class="author-text">
+            Aleksander Holynski
+            <span class="superscript"></span>
+          </a>
         </div>
-        <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
+        <div class="base-col author-col">
+          <a href="https://people.eecs.berkeley.edu/~kanazawa/" target="_blank" class="author-text">
+            Angjoo Kanazawa
+          </a>
         </div>
       </div>
-    </div>
-  </div>
-</section> -->
+      <div>
+        <h1 id="uc-berkeley">UC Berkeley</h1>
+      </div>
 
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="content">
-        <h2 class="title is-3">How it works</h2>
-        <div class="content has-text-centered">
-          <p>
-            Our method gradually updates a reconstructed NeRF scene by iteratively updating the dataset images while training the 
-            NeRF: (1) an image is rendered from the scene at a training viewpoint, (2) it is edited by InstructPix2Pix given a 
-            global text instruction, (3) the training dataset image is replaced with the edited image, and (4) the NeRF continues 
-            training as usual.
-          </p>
-          <img src="static/images/pipeline.png" style='width:100%;'>
+      <div class="link-labels base-row">
+        <div class="base-col icon-col"><a href="https://arxiv.org/" target="_blank" class="link-block"><img
+              src="https://uploads-ssl.webflow.com/51e0d73d83d06baa7a00000f/5cab99df4998decfbf9e218e_paper-01.png"
+              alt="paper"
+              sizes="(max-width: 479px) 12vw, (max-width: 767px) 7vw, (max-width: 991px) 41.8515625px, 56.6953125px"
+              srcset="https://uploads-ssl.webflow.com/51e0d73d83d06baa7a00000f/5cab99df4998decfbf9e218e_paper-01-p-500.png 500w, https://uploads-ssl.webflow.com/51e0d73d83d06baa7a00000f/5cab99df4998decfbf9e218e_paper-01.png 672w"
+              class="icon-img" /></a></div>
+        <div class="base-col icon-col"><a href="#coming_soon" class="link-block"><img
+              src="https://uploads-ssl.webflow.com/51e0d73d83d06baa7a00000f/5cae3b53b42ebb3dd4175a82_68747470733a2f2f7777772e69636f6e66696e6465722e636f6d2f646174612f69636f6e732f6f637469636f6e732f313032342f6d61726b2d6769746875622d3235362e706e67.png"
+              alt="paper" class="icon-img github-img-icon" /></a></div>
+      </div>
+      <div class="link-labels base-row">
+        <div class="base-col icon-col">
+          <strong class="link-labels-text">Paper</strong>
+        </div>
+        <div class="base-col icon-col">
+          <strong class="link-labels-text">&lt;/Code&gt;</strong>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
+      <h1 class="tldr">
+        <b>TL;DR</b>:
+        Instruct-NeRF2NeRF enables instruction-based editing of NeRFs via a 2D diffusion model
+      </h1>
+      <video id="main-video" autobuffer muted autoplay loop>
+        <source id="mp4" src="data/videos/face.mp4" type="video/mp4">
+      </video>
 
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <div class="columns is-centered">
-
-      <!-- Visual Effects. -->
-      <div class="column">
-        <div class="content">
-          <h2 class="title is-3">3D Consistency</h2>
-          <p>
-            We compare our edited NeRF rendering to running InstructPix2Pix on each rendered frame independently.
-            While our edited NeRF is quite consistent, editing each 
-            frame independently results in an inconsistent render with varying hair and shirt color.
-          </p>
-          <video id="per-frame" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/per-frame-placeholder.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
+      <h2 class="section-header">Overview</h2>
+      <div class="paragraph">
+        <p>
+          We propose a method for editing NeRF scenes with text-instructions. Given a NeRF of a scene and the
+          collection
+          of images used to reconstruct it, our method uses an image-conditioned diffusion model (<a
+            href="https://www.timothybrooks.com/instruct-pix2pix">InstructPix2Pix</a>) to
+          iteratively edit the input images while optimizing the underlying scene, resulting in an optimized 3D
+          scene that
+          respects the edit instruction. We demonstrate that our proposed method is able to edit large-scale,
+          real-world
+          scenes, and is able to accomplish more realistic, targeted edits than prior work.
+        </p>
       </div>
-      <!--/ Visual Effects. -->
 
-      <!-- Matting. -->
-      <div class="column">
-        <h2 class="title is-3">Dataset Evolution</h2>
-        <div class="columns is-centered">
-          <div class="column content">
-            <p>
-              At the start of training, the edited images perform the requested edit, but are often inconsistent. 
-              After iteratively training the NeRF and updating the training dataset, the images gradually become more 
-              3D consistent.
-            </p>
-            <video id="matting-video" controls playsinline height="100%">
-              <source src="./static/videos/matting.mp4"
-                      type="video/mp4">
-            </video>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    <!--/ Matting. -->
-
-    <!-- Animation. -->
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-
-        <h3 class="title is-4">Controlling Edit Strength</h3>
-        <div class="content has-text-justified">
-          <p>
-            Using the guidance parameters, users can control the degree of edit on their NeRF.
-          </p>
-        </div>
+      <h2 class="section-header">How it works</h2>
+      <div class="paragraph">
+        <p>
+          Our method gradually updates a reconstructed NeRF scene by iteratively updating the dataset images while
+          training the NeRF:
+        <ol>
+          <li>An image is rendered from the scene at a training viewpoint.</li>
+          <li>It is edited by InstructPix2Pix given a global text instruction.</li>
+          <li>The training dataset image is replaced with the edited image.</li>
+          <li>The NeRF continues training as usual.</li>
+        </ol>
+        </p>
         <img src="static/images/pipeline.png" style='width:100%;'>
+      </div>
 
-        <h3 class="title is-4">Baseline Comparisons</h2>
-        <!-- Interpolating. -->
-        <div class="content has-text-justified">
-          <p>
-            We compare against the following baselines: 
-            (1) using our dataset update method but using <a href="https://github.com/CompVis/stable-diffusion">Stable Diffusion</a> instead of InstructPix2Pix
-            (2) using an SDS-based loss (as introduced in <a href="https://dreamfusion3d.github.io/">DreamFusion</a>) driven by
-            InstructPix2Pix
-            (3) editing each training frame with InstructPix2Pix and then training a NeRF traditionally (One-time Dataset Update)
-          </p>
+      <video id="main-video" muted autoplay loop>
+        <source id="mp4" src="data/videos/dataset_update.mp4" type="video/mp4">
+      </video>
+      <div class="paragraph" style="text-align: center">
+        Example updates to the training dataset images over time. Notice that the edits are gradually becoming more
+        consistent.
+      </div>
+
+      <h2 class="section-header">Training Progression</h2>
+      <video id="body-video" autobuffer muted autoplay loop>
+        <source id="mp4" src="data/videos/evolve.mp4" type="video/mp4">
+      </video>
+
+      <h2 class="section-header">Results</h2>
+
+      <video id="farm-video" autobuffer muted autoplay webkit-playsinline playsinline loop>
+        <source id="farm-video-src" src="data/videos/farm/farm-original.mp4" type="video/mp4">
+      </video>
+      <div class="base-row farm-thumbnail-row" , id="thumbnails-scroll">
+        <div class="base-col farm-thumbnail-col">
+          <button class="thumbnail-btn" id="original">
+            <img src="data/icons/icons_reset-big.svg" alt="paper" class="thumbnails" />
+            Original
+          </button>
         </div>
-
-        <video id="matting-video" controls playsinline height="100%">
-          <source src="./static/videos/teaser-placeholder.mp4"
-                  type="video/mp4">
-        </video>
-
-        <!-- <div class="columns is-vcentered interpolation-panel">
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_start.jpg"
-                 class="interpolation-image"
-                 alt="Interpolate start reference image."/>
-            <p>Start Frame</p>
-          </div>
-          <div class="column interpolation-video-column">
-            <div id="interpolation-image-wrapper">
-              Loading...
-            </div>
-            <input class="slider is-fullwidth is-large is-info"
-                   id="interpolation-slider"
-                   step="1" min="0" max="100" value="0" type="range">
-          </div>
-          <div class="column is-3 has-text-centered">
-            <img src="./static/images/interpolate_end.jpg"
-                 class="interpolation-image"
-                 alt="Interpolation end reference image."/>
-            <p class="is-bold">End Frame</p>
-          </div>
-        </div> -->
-        <br/>
-        <br/>
-        <!--/ Interpolating. -->
-
-        <!-- Re-rendering. -->
-        <h3 class="title is-4">Comparison to NeRF-Art</h3>
-        <div class="content has-text-justified">
-          <p>
-            We show comparisons against a recent work NeRF-Art. Since edits are subjective, we leave it to the readers to 
-            determine their preference for these edits and provide this as a reference to a competitive state-of-the-art.
-          </p>
+        <div class="base-col farm-thumbnail-col">
+          <button class="thumbnail-btn" id="autumn">
+            <img src="data/icons/icons_autumn.svg" alt="paper" class="thumbnails" />
+            Autumn
+          </button>
         </div>
-        <video id="matting-video" controls playsinline height="100%">
-          <source src="./static/videos/teaser-placeholder.mp4"
-                  type="video/mp4">
-        </video>
-        <!--/ Re-rendering. -->
-
-      </div>
-    </div>
-  </div>
-
-</div>
-
-</section>
-
-<section class="section">
-
-<div class="container is-max-desktop">
-  <!-- Concurrent Work. -->
-  <div class="columns is-centered has-text-centered">
-    <div class="column is-full-width">
-      <h2 class="title is-3">Related Links</h2>
-
-      <div class="content has-text-centered">
-        <p>
-          Our work is a direct extension of <a href="https://www.timothybrooks.com/instruct-pix2pix">InstructPix2Pix</a>.
-        </p>
-        <p>
-          <a href="https://cassiepython.github.io/nerfart/">NeRF-Art</a> is a concurrent related work which performs stylization using a combination of CLIP-based losses.
-        </p>
-      </div>
-    </div>
-  </div>
-  <!--/ Concurrent Work. -->
-
-  <div class="columns is-centered has-text-centered">
-    <div class="column is-full-width">
-      <h2 class="title is-3">Acknowledgements</h2>
-
-      <div class="content has-text-centered">
-        <p>
-          We thank Ethan Weber, Frederik Warburg, 
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-</section>
-
-<section id="code-coming-soon" class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="content">
-        <img src="static/images/nerfstudio_logo.png" style="height: 3em; margin-top:2em">
-        <h2 class="title is-3">Code coming soon</h2>
-        <div class="content has-text-centered">
-          <p>
-            Instruct-NeRF2NeRF will be integrated into the <a href="https://github.com/nerfstudio-project/nerfstudio">Nerfstudio</a>
-            codebase, enabling users to easily edit their own NeRFs.
-          </p>
+        <div class="base-col farm-thumbnail-col">
+          <button class="thumbnail-btn" id="desert-sand">
+            <img src="data/icons/icons_desert.svg" alt="paper" class="thumbnails" />
+            Desert
+          </button>
+        </div>
+        <div class="base-col farm-thumbnail-col">
+          <button class="thumbnail-btn" id="midnight">
+            <img src="data/icons/icons_midnight.svg" alt="paper" class="thumbnails" />
+            Midnight
+          </button>
+        </div>
+        <div class="base-col farm-thumbnail-col">
+          <button class="thumbnail-btn" id="snow">
+            <img src="data/icons/icons_snow.svg" alt="paper" class="thumbnails" />
+            Snow
+          </button>
+        </div>
+        <div class="base-col farm-thumbnail-col">
+          <button class="thumbnail-btn" id="storm">
+            <img src="data/icons/icons_storm.svg" alt="paper" class="thumbnails" />
+            Storm
+          </button>
+        </div>
+        <div class="base-col farm-thumbnail-col">
+          <button class="thumbnail-btn" id="sunset">
+            <img src="data/icons/icons_sunset.svg" alt="paper" class="thumbnails" />
+            Sunset
+          </button>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@article{placeholder,
-  author    = {placeholder},
-  title     = {placeholder},
-  journal   = {placeholder},
-  year      = {placeholder},
-}</code></pre>
-  </div>
-</section>
-
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <a class="icon-link"
-         href="">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This website was borrowed from <a
-              href="https://github.com/nerfies/nerfies.github.io">here</a>.
-          </p>
+      <video id="bear-video" autobuffer muted autoplay webkit-playsinline playsinline loop>
+        <source id="bear-video-src" src="data/videos/bear/bear-original.mp4" type="video/mp4">
+      </video>
+      <div class="bear-thumbnail-row" , id="thumbnails-scroll">
+        <div class="base-col bear-thumbnail-col">
+          <button class="thumbnail-btn" id="original-bear">
+            <img src="data/icons/icons_reset-small.svg" alt="paper" class="thumbnails" />
+            Original
+          </button>
         </div>
+        <div class="base-col bear-thumbnail-col">
+          <button class="thumbnail-btn" id="grizzly">
+            <img src="data/icons/icons_grizzly.svg" alt="paper" class="thumbnails" />
+            Grizzly Bear
+          </button>
+        </div>
+        <div class="base-col bear-thumbnail-col">
+          <button class="thumbnail-btn" id="panda">
+            <img src="data/icons/icons_panda.svg" alt="paper" class="thumbnails" />
+            Panda Bear
+          </button>
+        </div>
+        <div class="base-col bear-thumbnail-col">
+          <button class="thumbnail-btn" id="polar">
+            <img src="data/icons/icons_polar.svg" alt="paper" class="thumbnails" />
+            Polar Bear
+          </button>
+        </div>
+      </div>
+
+      <video id="body-video" autobuffer muted autoplay loop>
+        <source id="mp4" src="data/videos/body_transform.mp4" type="video/mp4">
+      </video>
+
+      <div class="base-row add-top-padding">
+        <img src="data/nerfstudio_logo.png" alt="Nerfstudio" style="height: 5em; margin-top:2em" />
+        <h1 id="abstract">
+          <a id="coming_soon">Integration Coming Soon...</a>
+        </h1>
+      </div>
+
+      <div class="citation add-top-padding">
+        <h1 id="abstract"> Citation </h1>
+        <p> If you use this work or find it helpful, please consider citing: (bibtex) </p>
+        <pre id="codecell0">@article{instructnerf2023,
+        &nbsp;author = {Haque, Ayaan and Tancik, Matthew and Efros, Alexei and Holynski, Aleksander and Kanazawa, Angjoo},
+        &nbsp;title = {Instruct-NeRF2NeRF: Editing 3D Scenes with Instructions},
+        &nbsp;journal = {arXiv preprint arXiv:XXXXXX},
+        &nbsp;year = {2023},
+        } </pre>
+      </div>
+
+      <h2 class="section-header">Acknowledgments</h2>
+      <div class="paragraph">
+        We thank our colleagues for their insightful feedback helpful discussions, in particular Ethan Weber, Frederik
+        Warburg, Ben Poole, Richard Szeliski, Jon Barron, Alexander Kristoffersen, Rohan Mathur, Alejandro Escontrela,
+        and the Nerfstudio team.
       </div>
     </div>
   </div>
-</footer>
-
 </body>
+
 </html>
