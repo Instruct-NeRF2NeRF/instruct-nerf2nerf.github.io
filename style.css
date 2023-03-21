@@ -592,4 +592,13 @@ input:checked + .slider:before {
         font-size: 3vw;
         margin-top: -8vw;
     }
+
+    .farm-thumbnail-row {
+        width: 100%;
+    }
+    
+    .bear-thumbnail-row {
+        width: 80%;
+    }
+
 }
