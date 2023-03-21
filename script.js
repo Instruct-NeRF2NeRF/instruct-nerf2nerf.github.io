@@ -14,8 +14,8 @@ var farmTextStrings = [
 var bearTextStrings = [
   "Original NeRF",
   "<em>\"Turn the bear into a grizzly bear\"</em>",
-  "<em>\"Turn the bear into a panda\"</em>",
   "<em>\"Turn the bear into a polar bear\"</em>",
+  "<em>\"Turn the bear into a panda\"</em>",
 ];
 
 $("#farm-video").on('loadedmetadata', function() {
