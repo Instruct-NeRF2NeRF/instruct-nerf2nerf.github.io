@@ -1,5 +1,5 @@
 
-var videos = [];
+var VIDEO_ASPECT_RATIO = 16.0 / 9.0;
 
 $("#farm-video").on('loadedmetadata', function() {
     this.width = this.videoWidth;
@@ -61,3 +61,23 @@ function change_bear_index (idx) {
     bearVideo.src = "data/videos/bear/bear-" + bearThumbnails[idx].id + ".mp4";
     bearVideo.load();
 }
+
+function resize_canvas() {
+    var farmVideo = document.getElementById('farm-video');
+    var bearVideo = document.getElementById('bear-video');
+  
+    var width = farmVideo.offsetWidth;
+    var height = width / VIDEO_ASPECT_RATIO;
+    
+    farmVideo.height = height;
+    farmVideo.width = width;
+    bearVideo.height = height;
+    bearVideo.width = width;
+  }
+
+  window.addEventListener('resize', resize_canvas, false);
+
+  document.addEventListener("DOMContentLoaded", function() {
+    resize_canvas();
+  });
+  
