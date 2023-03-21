@@ -8,11 +8,11 @@
   <meta content="Instruct-NeRF2NeRF: Editing 3D Scenes with Instructions" property="og:title" />
   <meta content="Instruct-NeRF2NeRF enables editing of a NeRF scene with a simple text instruction."
     property="og:description" />
-  <meta content="TODO" property="og:image" />
+  <meta content="data/open_graph.png" property="og:image" />
   <meta content="Instruct-NeRF2NeRF: Editing 3D Scenes with Instructions" property="twitter:title" />
   <meta content="Instruct-NeRF2NeRF enables editing of a NeRF scene with a simple text instruction."
     property="twitter:description" />
-  <meta content="TODO" property="twitter:image" />
+  <meta content="data/open_graph.png" property="twitter:image" />
   <meta property="og:type" content="website" />
   <meta content="summary_large_image" name="twitter:card" />
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
@@ -110,7 +110,7 @@
         <b>TL;DR</b>:
         Instruct-NeRF2NeRF enables instruction-based editing of NeRFs via a 2D diffusion model
       </h1>
-      <video id="main-video" autobuffer muted autoplay loop>
+      <video id="main-video" autobuffer muted autoplay controls loop>
         <source id="mp4" src="data/videos/face.mp4" type="video/mp4">
       </video>
 
@@ -162,6 +162,9 @@
       <video id="farm-video" autobuffer muted autoplay webkit-playsinline playsinline loop>
         <source id="farm-video-src" src="data/videos/farm/farm-original.mp4" poster="/data/test.jpg" type="video/mp4">
       </video>
+      <div class="video-text">
+        <span class="overlay-text" id="farm-text">"Make it look like autumn"</span>
+      </div>
       <div class="base-row farm-thumbnail-row" , id="thumbnails-scroll">
         <div class="base-col farm-thumbnail-col">
           <button class="thumbnail-btn" id="original">
@@ -210,6 +213,9 @@
       <video id="bear-video" autobuffer muted autoplay webkit-playsinline playsinline loop>
         <source id="bear-video-src" src="data/videos/bear/bear-original.mp4" type="video/mp4">
       </video>
+      <div class="video-text">
+        <span class="overlay-text" id="bear-text">"Make it look like autumn"</span>
+      </div>
       <div class="bear-thumbnail-row" , id="thumbnails-scroll">
         <div class="base-col bear-thumbnail-col">
           <button class="thumbnail-btn" id="original-bear">

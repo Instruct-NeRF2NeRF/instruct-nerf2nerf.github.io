@@ -192,6 +192,7 @@ body {
     margin-top: 0px;
     margin-bottom: 0px;
     border-radius: 10px;
+    aspect-ratio: 16/9;
 }
 
 #bear-video {
@@ -199,6 +200,7 @@ body {
     margin-top: 0px;
     margin-bottom: 0px;
     border-radius: 10px;
+    aspect-ratio: 16/9;
 }
 
 #addtl-video {
@@ -525,8 +527,24 @@ input:checked + .slider:before {
     border-radius: 2rem 2rem 2rem 2rem;
 }
 
-.add-top-padding{
+.add-top-padding {
     margin-top: 10px;
+}
+
+.video-text {
+    font-size: 24px;
+    margin-top: -40px;
+    margin-bottom: 20px;
+    color: white;
+    /* font-family: serif; */
+}
+
+.overlay-text {
+    background-color: #00000070;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
 }
 
 @media screen and (max-width: 550px) {
@@ -567,5 +585,10 @@ input:checked + .slider:before {
         max-height: 20px;
         margin: 0px;
         padding: 0px;
+    }
+
+    .video-text {
+        font-size: 3vw;
+        margin-top: -8vw;
     }
 }

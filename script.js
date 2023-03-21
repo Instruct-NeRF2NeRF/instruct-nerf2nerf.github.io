@@ -1,6 +1,23 @@
 
 var VIDEO_ASPECT_RATIO = 16.0 / 9.0;
 
+var farmTextStrings = [
+    "Original NeRF",
+    "<em>\"Make it autumn\"</em>",
+    "<em>\"Make it look like the Namibian desert\"</em>",
+    "<em>\"Make it midnight\"</em>",
+    "<em>\"Make it look like it just snowed\"</em>",
+    "<em>\"Make it stormy\"</em>",
+    "<em>\"Make it sunset\"</em>",
+];
+
+var bearTextStrings = [
+  "Original NeRF",
+  "<em>\"Turn the bear into a grizzly bear\"</em>",
+  "<em>\"Turn the bear into a panda\"</em>",
+  "<em>\"Turn the bear into a polar bear\"</em>",
+];
+
 $("#farm-video").on('loadedmetadata', function() {
     this.width = this.videoWidth;
     this.height = this.videoHeight;
@@ -13,6 +30,9 @@ $(function() {
 
     farmVideo = document.getElementById('farm-video');
     bearVideo = document.getElementById('bear-video');
+
+    farmText = document.getElementById('farm-text');
+    bearText = document.getElementById('bear-text');
 
     farmThumbnails = [
         document.getElementById('original'),
@@ -48,6 +68,7 @@ function change_farm_index (idx) {
         farmThumbnails[current_farm_idx].classList.remove("active-btn");
     }
     current_farm_idx = idx;
+    farmText.innerHTML = farmTextStrings[idx];
     farmVideo.src = "data/videos/farm/farm-" + farmThumbnails[idx].id + ".mp4";
     farmVideo.load();
 }
@@ -58,26 +79,7 @@ function change_bear_index (idx) {
         bearThumbnails[current_bear_idx].classList.remove("active-btn");
     }
     current_bear_idx = idx;
+    bearText.innerHTML = bearTextStrings[idx];
     bearVideo.src = "data/videos/bear/bear-" + bearThumbnails[idx].id + ".mp4";
     bearVideo.load();
 }
-
-function resize_canvas() {
-    var farmVideo = document.getElementById('farm-video');
-    var bearVideo = document.getElementById('bear-video');
-  
-    var width = farmVideo.offsetWidth;
-    var height = width / VIDEO_ASPECT_RATIO;
-    
-    farmVideo.height = height;
-    farmVideo.width = width;
-    bearVideo.height = height;
-    bearVideo.width = width;
-  }
-
-  window.addEventListener('resize', resize_canvas, false);
-
-  document.addEventListener("DOMContentLoaded", function() {
-    resize_canvas();
-  });
-  
